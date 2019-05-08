@@ -6,10 +6,13 @@ class ProductScreen extends StatefulWidget {
 
   ProductScreen(this.product);
   @override
-  _ProductScreenState createState() => _ProductScreenState();
+  _ProductScreenState createState() => _ProductScreenState(product);
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+  final ProductData product;
+  _ProductScreenState(this.product);
+
   @override
   Widget build(BuildContext context) {
     return Container();
