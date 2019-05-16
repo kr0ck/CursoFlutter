@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/ui/home_ui.dart';
-import 'package:loja_virtual/ui/login_ui.dart';
+//import 'package:loja_virtual/ui/login_ui.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Color.fromARGB(255, 4, 125, 141)
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),//HomeScreen(),
+      home: HomeScreen(),//HomeScreen(),
     );
   }
 }
