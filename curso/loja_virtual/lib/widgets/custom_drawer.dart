@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/tiles/drawer_tile.dart';
 import 'package:loja_virtual/ui/login_ui.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class CustomDrawer extends StatelessWidget {
-
   final PageController pageController;
 
   CustomDrawer(this.pageController);
@@ -43,28 +44,38 @@ class CustomDrawer extends StatelessWidget {
                     Positioned(
                       left: 0.0,
                       bottom: 0.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Olá',
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                          ),
-                          GestureDetector(
-                            child: Text(
-                              'Entre ou Cadastra-se >',
+                      child: ScopedModelDescendant<UserModel>(
+                          builder: (context, child, model) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Olá, ${!model.isLoggedIn() ? '' : model.userData['name']}',
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold),
+                                  fontSize: 18.0, fontWeight: FontWeight.bold),
                             ),
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> LoginScreen()));   
-                            },
-                          )
-                        ],
-                      ),
+                            GestureDetector(
+                              child: Text(
+                                !model.isLoggedIn()
+                                    ? 'Entre ou Cadastra-se >'
+                                    : 'sair',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onTap: () {
+                                if (!model.isLoggedIn()) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
+                                }else{
+                                  model.signOut();
+                                }
+                              },
+                            )
+                          ],
+                        );
+                      }),
                     )
                   ],
                 ),
@@ -72,8 +83,9 @@ class CustomDrawer extends StatelessWidget {
               Divider(),
               DrawerTile(Icons.home, 'Início', pageController, 0),
               DrawerTile(Icons.list, 'Produtos', pageController, 1),
-              DrawerTile(Icons.location_on, 'Lojas', pageController,2),
-              DrawerTile(Icons.playlist_add_check, 'Meus Pedidos', pageController,3),
+              DrawerTile(Icons.location_on, 'Lojas', pageController, 2),
+              DrawerTile(
+                  Icons.playlist_add_check, 'Meus Pedidos', pageController, 3),
             ],
           )
         ],

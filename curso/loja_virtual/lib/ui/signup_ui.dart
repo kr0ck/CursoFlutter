@@ -12,10 +12,13 @@ class _SingUpScreenState extends State<SingUpScreen> {
   final _passCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _addressCtrl = TextEditingController();
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Criar conta'),
         centerTitle: true,
@@ -99,7 +102,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       };
 
                       model.singUp(
-                        onfail: _onFail,
+                        onFail: _onFail,
                         onSuccess: _onSucess,
                         pass: _passCtrl.text,
                         userData: userData,
@@ -115,6 +118,29 @@ class _SingUpScreenState extends State<SingUpScreen> {
     );
   }
 
-  void _onSucess() {}
-  void _onFail() {}
+  void _onSucess() {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(
+          'Usuario criado com sucesso'
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        duration: Duration(seconds: 3),
+      )
+    );
+    Future.delayed(Duration(seconds: 2)).then((_){
+      Navigator.of(context).pop();
+    });
+  }
+  void _onFail() {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: Text(
+          'Falha ao criar usuario'
+        ),
+        backgroundColor: Colors.redAccent,
+        duration: Duration(seconds: 3),
+      )
+    );
+  }
 }
