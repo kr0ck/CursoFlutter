@@ -79,8 +79,8 @@ class UserModel extends Model {
     notifyListeners();
   }
 
-  void recoverPass() {
-    singUp(userData: null, pass: null, onSuccess: null, onFail: null);
+  void recoverPass(String email) {
+    _auth.sendPasswordResetEmail(email: email);
   }
 
   bool isLoggedIn() {
