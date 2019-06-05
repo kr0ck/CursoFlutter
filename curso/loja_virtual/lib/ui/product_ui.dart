@@ -5,6 +5,7 @@ import 'package:loja_virtual/datas/product_data.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/models/user_model.dart';
+import 'package:loja_virtual/ui/cart_ui.dart';
 import 'package:loja_virtual/ui/login_ui.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -122,6 +123,9 @@ class _ProductScreenState extends State<ProductScreen> {
                         cartProduct.category = product.category;
 
                         CartModel.of(context).addCartItem(cartProduct);
+
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context)=> CartScrren()));
                       }else {         // caso não logado ira para tela de logar
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context)=> LoginScreen()));
