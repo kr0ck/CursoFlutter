@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/models/user_model.dart';
+import 'package:loja_virtual/tiles/cart_tile.dart';
 import 'package:loja_virtual/ui/login_ui.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -44,6 +45,8 @@ class CartScrren extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             );
+          }else{
+            _userProducts(context, model);
           }
         },
       ),
@@ -87,6 +90,20 @@ class CartScrren extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  Widget _userProducts(context, model){
+    return ListView(
+      children: <Widget>[
+        Column(
+          children: model.products.map(
+            (product){
+              return CartTile(product);
+            }
+          )
+        )
+      ],
     );
   }
 }
