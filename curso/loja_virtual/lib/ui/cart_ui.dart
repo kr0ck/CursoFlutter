@@ -38,15 +38,20 @@ class CartScrren extends StatelessWidget {
             return Center(
               child: Text(
                 'Nenhum produto no carrinho!',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             );
-          }else{
-            _userProducts(context, model);
+          } else {
+            return ListView(      // Não colocar um listView dentro de um widget
+              children: <Widget>[
+                Column(
+                  children: model.products.map((product) {
+                    return CartTile(product);
+                  }).toList(),
+                )
+              ],
+            );
           }
         },
       ),
@@ -93,17 +98,5 @@ class CartScrren extends StatelessWidget {
     );
   }
 
-  Widget _userProducts(context, model){
-    return ListView(
-      children: <Widget>[
-        Column(
-          children: model.products.map(
-            (product){
-              return CartTile(product);
-            }
-          )
-        )
-      ],
-    );
-  }
+  
 }
