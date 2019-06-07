@@ -19,6 +19,7 @@ class CartTile extends StatelessWidget {
   }
 
   Widget _buildContent(context) {
+    CartModel.of(context).updatePrice();
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -58,7 +59,7 @@ class CartTile extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.remove),
                       color: Theme.of(context).primaryColor,
-                      onPressed: cartProduct.quantity < 1 ? () {
+                      onPressed: cartProduct.quantity > 1 ? () {
                         CartModel.of(context).decProduct(cartProduct);
                       }
                       : null,

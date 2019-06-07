@@ -28,12 +28,14 @@ class DiscountCard extends StatelessWidget {
               onFieldSubmitted: (text){
                 Firestore.instance.collection('cupons').document(text).get().then((docSnap){
                   if (docSnap.data != null) {
+                    CartModel.of(context).setCupon(text, docSnap.data['percetage']);
                     Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text('Desconto de ${docSnap.data['percetage']}% aplicado'),
                       backgroundColor: Theme.of(context).primaryColor,
                       )
                     );
                   } else {
+                    CartModel.of(context).setCupon(null, 0);
                     Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text('Cupom não encontrado'),
                       backgroundColor: Colors.red,
